@@ -13,7 +13,9 @@ async function newCar(event) {
     }
     }).then(res => res.json())
     .catch(error => console.error('Error:', error))
-    .then(response => console.log('Success:', response));
+    .then(response => console.log('Success:', response))
+    .then(response => clearList())
+    .then(response => carsCards('International'));
     console.log("despues del fetch");    
 }
 
@@ -31,8 +33,13 @@ function dataFormNewCar(){
  
     let carType = document.getElementsByName('carType');
     for(i = 0; i < carType.length; i++) {
-        if(carType[i].checked)
-            data["tipoVehiculo"] = document.getElementById(carType[i].id).value;
+        if(carType[i].checked){
+            if(document.getElementById(carType[i].id).value == "Otro"){
+                data["tipoVehiculo"] = document.getElementById("inputOther").value;
+            }else{
+                data["tipoVehiculo"] = document.getElementById(carType[i].id).value;
+            }
+        }
     };
     
     let characteristics = document.getElementsByName('characteristics');

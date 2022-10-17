@@ -1,9 +1,101 @@
-const cardSearchRef = document.getElementById("cardSearch"); 
+var countryId;
 
-let newCardCol = cardSearchRef.createElement("div");
-let newCardHeader = newCardCol.innerHTML("<h5 class='card-header'>WJS234</h5>");
+window.addEventListener('load', function() {
+  //console.log('La página ha terminado de cargarse!!');
+  filterCountry("Internacional");
+});
 
-newCardCol.appendChild(newCardHeader);
+async function filterCountry(clicked_id){
+  countryId = clicked_id;
+  vehiculo = await allCar(countryId);
+  carsCards(countryId);
+}
+
+async function allCar() {
+  console.log("all car");
+  //log.textContent = `Form Submitted! Time stamp: ${event.timeStamp}`;
+  var url = 'https://633e4bc00dbc3309f3b374d2.mockapi.io/api/v1/vehiculos';
+  const respuesta = await fetch(url, {
+  method: 'GET', // or 'PUT',
+  headers:{
+      'Content-Type': 'application/json'
+  }
+  }).catch(error => console.error('Error:', error))
+
+  var cars = respuesta.json();
+  //console.log('Success:', cars);
+  //console.log("despues del fetch");
+  return cars;
+}
+
+function clearListCards(){
+  const table = document.getElementById("cardSearch");
+  table.innerHTML = '';
+}
+
+async function carsCards(countryId){
+    await clearListCards();
+    let cars = await allCar();
+    //console.log('Car:', cars);
+    for (let index = 0; index < cars.length; index++) {
+      if (countryId =="Nacional"){
+        if(cars[index]["pais"]=="Colombia"){
+          createCard(cars[index]);
+        }
+      }else{
+        if(cars[index]["pais"] != "Colombia"){
+          createCard(cars[index]);
+        }
+      }
+    }
+}
+
+
+function createCard(car){
+    const cardSearchRef = document.getElementById("cardSearch"); 
+    //div 1
+    let newCol = document.createElement('div');
+    newCol.className = 'col';
+    //div 2
+    let newCard = document.createElement('div');
+    newCard.className = 'card h-100';
+    // title
+    let titlePlaca = document.createElement('h5');
+    titlePlaca.className = 'card-header';
+    titlePlaca.textContent = car["placa"];
+    newCard.appendChild(titlePlaca);
+    // List
+    let itemsCard = document.createElement('ul');
+    itemsCard.className = 'list-group list-group-flush';
+    //   Item 1 List
+    let itemCard1 = document.createElement('li');
+    itemCard1.className = 'list-group-item';
+    itemCard1.textContent = `Precio: ${car["precio"]}`;
+    itemsCard.appendChild(itemCard1);
+    //   Item 2 List
+    let itemCard2 = document.createElement('li');
+    itemCard2.className = 'list-group-item';
+    itemCard2.textContent = `País: ${car["pais"]}`;;
+    itemsCard.appendChild(itemCard2);
+    //   Item 3 List
+    let itemCard3 = document.createElement('li');
+    itemCard3.className = 'list-group-item';
+    itemCard3.textContent = `Tipo de vehículo: ${car["tipoVehiculo"]}`;
+    itemsCard.appendChild(itemCard3);
+    //   Item 4 List
+    let itemCard4 = document.createElement('li');
+    itemCard4.className = 'list-group-item';
+    itemCard4.textContent = `Características: ${car["caracteristicas"]}`;
+    itemsCard.appendChild(itemCard4);
+    // End List
+    newCard.appendChild(itemsCard);
+    // end div
+    newCol.appendChild(newCard);
+    cardSearchRef.appendChild(newCol);
+}
+
+
+
 
 
 
