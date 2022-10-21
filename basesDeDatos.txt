@@ -1,0 +1,103 @@
+create table paises(
+id serial PRIMARY KEY,
+	nombre varchar (30)
+)
+
+--------------------------- TIPO VEHICULOS------------------
+create table tipo_vehiculos(
+id serial PRIMARY KEY,
+	categoria_vehiculo varchar (100)
+)
+
+-------------------------CLIENTES----------------------------
+
+
+create table cliente(
+id serial PRIMARY key,
+nombre VARCHAR(100),
+	apellido varchar(50),
+	documento INTEGER,
+	direccion_cliente varchar(100),
+	telefono_cliente INTEGER,
+	id_pais integer
+)
+-------------------------- VEHICULOS --------------------------
+create table vehiculos(
+id serial PRIMARY key,
+	id_concesionario INTEGER,
+	modelo INTEGER,
+	marca VARCHAR(100),
+	annio INTEGER,
+	precio_vehiculo double precision
+
+)
+
+------------------------------ VENTAS -----------------------------
+
+create table ventas(
+id serial PRIMARY key,
+fecha date,
+	id_vehiculo INTEGER,
+	id_empleado INTEGER,
+	precio_vehiculo double precision,
+	descripcion text,
+	id_cliente INTEGER,
+	numero_factura varchar(10)
+
+)
+----------------------- EMPLEADOS ---------------------------------
+create table empleado(
+id serial PRIMARY key,
+nombre  VARCHAR(50),
+	apellido varchar(50),
+	documento_empleado integer,
+	id_concesionario integer,
+	direccion_empleado varchar(50),
+	telefono integer,
+	cargo varchar(30)
+
+)
+
+---------------------CONCESIONARIO -----------------------------
+create table concesionario(
+id serial PRIMARY key,
+nombre_concesionario VARCHAR(100),
+	nit varchar(20),
+	id_pais integer,
+	ciudad varchar(100),
+	direccion varchar(100),
+	telefono integer,
+	email varchar(50)
+
+)
+
+------------------- TRANSACCION_VEHICULOS ----------------------------
+create table transaccion_vehiculos(
+id serial PRIMARY key,
+	fecha varchar(100),
+	detalle varchar(100),
+	cantidad integer
+
+)
+---------------------------PROVEEDOR ---------------------------------------
+create table proveedor(
+id serial PRIMARY key,
+	id_pais integer,
+	nombre_provee varchar(100),
+	apellido_provee varchar (100),
+	ciudad varchar(100),
+	direccion varchar(100),
+	telefono integer,
+	id_vehiculo integer
+	
+)
+
+-------------------------- administrador-------------------------
+create table administrador(
+id serial PRIMARY key,
+	id_concesionario integer,
+	id_empleado integer
+	
+)
+
+
